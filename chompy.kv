@@ -1,0 +1,64 @@
+#:import dp kivy.metrics.dp
+
+<Button>:
+    background_normal: ''
+    background_down: ''
+    background_color: 0.16, 0.15, 0.25, 1
+    color: 1, 1, 1, 1
+    border: 0, 0, 0, 0
+
+
+<PetScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.078, 0.071, 0.122, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(15)
+        spacing: dp(10)
+
+        BoxLayout:
+            size_hint_y: 0.1
+            Label:
+                text: 'Уровень: ' + str(root.tier) + ' / 4'
+                font_size: '18sp'
+                bold: True
+                color: 1, 0.86, 0.6, 1
+            Label:
+                text: 'Слов: ' + str(root.reads)
+                font_size: '18sp'
+                color: 1, 1, 1, 0.8
+
+        PetWidget:
+            id: pet
+            tier: root.tier
+            anim: root.anim
+            face: root.face
+            size_hint_y: 0.6
+
+        Label:
+            text: root.status
+            font_size: '16sp'
+            color: 1, 1, 1, 0.7
+            size_hint_y: 0.08
+
+        BoxLayout:
+            size_hint_y: 0.12
+            spacing: dp(8)
+
+            Button:
+                text: 'Прочитать слово'
+                font_size: '16sp'
+                background_color: 0.42, 0.36, 0.91, 1
+                on_press: root.on_read()
+
+            Button:
+                text: 'Сменить анимацию'
+                font_size: '14sp'
+                size_hint_x: 0.5
+                background_color: 0.16, 0.15, 0.25, 1
+                on_press: root.toggle_anim('walk' if root.anim == 'idle' else 'idle')
